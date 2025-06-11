@@ -1,10 +1,24 @@
-import { financialAgent } from "./agents/financial-agent";
+import { getNearAgent } from "./agents/near-agent";
 
 async function main() {
-	const response = await financialAgent.run({
-		messages: [{ role: "user", content: "Convert 100 USD to EUR." }],
+	const nearAgent = await getNearAgent();
+
+	console.log("Starting event listener...");
+
+	// Start listening
+	await nearAgent.run({
+		messages: [
+			{
+				role: "user",
+				content: "Listen 'amm.iqai.near' contract for 'run_agent' events.",
+			},
+		],
 	});
-	console.log(response.content);
+
+	// Keep the process alive indefinitely
+	while (true) {
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+	}
 }
 
 main().catch(console.error);
