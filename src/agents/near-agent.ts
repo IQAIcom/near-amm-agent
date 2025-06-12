@@ -10,8 +10,8 @@ export const getNearAgent = async (samplingHandler?: SamplingHandler) => {
 		samplingHandler,
 		transport: {
 			mode: "stdio",
-			command: "npx",
-			args: ["-y", "@iqai/mcp-near-agent"],
+			command: "pnpm",
+			args: ["dlx", "@iqai/mcp-near-agent"],
 			env: {
 				ACCOUNT_ID: env.ACCOUNT_ID,
 				ACCOUNT_KEY: env.ACCOUNT_KEY,
