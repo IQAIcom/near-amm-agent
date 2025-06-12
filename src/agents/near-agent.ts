@@ -3,7 +3,7 @@ import { env } from "../env";
 
 export const getNearAgent = async (samplingHandler?: SamplingHandler) => {
 	const nearAgentToolSet = new McpToolset({
-		name: "Near Agent MCP Client",
+		name: "near_agent",
 		description: "Near Agent MCP to watch near chain transactions",
 		debug: env.DEBUG,
 		retryOptions: { maxRetries: 2, initialDelay: 200 },
