@@ -1,66 +1,133 @@
-# 🤖 ADK Agent Starter
+# 🤖 AMM Near Agent
 
-This is a starter template to start building your own agent with `@iqai/adk` library. 
+This repository contains a practical example of AI integration with the NEAR blockchain protocol, specifically an Automated Market Maker (AMM) agent built with the `@iqai/adk` library. The agent listens for blockchain events and performs automated market making calculations.
 
-## 🚀 Get Started
-Start by cloning the repository or clicking on use as template button on github ui. 
+## ❓ What is the AMM Near Agent?
+
+The AMM Near Agent is a specialized AI agent that facilitates trading between two assets on the NEAR Protocol. It works with the [AMM Near Contract](https://github.com/zavodil/ai-amm) to provide automated price calculations for token swaps using the constant product formula (x * y = k).
+
+### ⚙️ How It Works
+
+1. **Event Listening**: The Near Agent continuously monitors the `amm.iqai.near` contract for `run_agent` events
+2. **Event Processing**: When a swap event is detected, the agent processes the transaction details
+3. **AMM Calculations**: The AMM Agent calculates optimal output amounts using the constant product formula
+4. **Response**: The agent responds with calculated swap amounts back to the contract
+5. **Transaction Completion**: The contract finalizes the swap and transfers tokens to the user
+
+## 🏗️ Architecture
+
+The project consists of two main agents:
+
+- **Near Agent** (`src/agents/near-agent.ts`): Handles blockchain event listening using MCP (Model Context Protocol)
+- **AMM Agent** (`src/agents/amm-agent.ts`): Performs automated market making calculations using custom tools
+
+### 🛠️ Tools
+
+- **Amount Out Calculator** (`src/tools/amount-out-caluculator.ts`): Calculates swap output amounts using AMM constant product formula
+
+## 🚀 Getting Started
+
+### 📋 Prerequisites
+
+- Node.js (v18 or higher)
+- pnpm package manager
+- NEAR account and access to NEAR testnet/mainnet
+
+### 💾 Installation
 
 ```bash
-git clone https://github.com/IQAICOM/adk-agent-starter.git
-```
+# Clone the repository
+git clone <repository-url>
 
-📦 Install the dependencies
+# Navigate to the project directory
+cd amm-near-agent
 
-```bash
+# Install dependencies
 pnpm install
 ```
 
-▶️ Run the agent
+### ⚙️ Configuration
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+# NEAR Account Configuration
+ACCOUNT_ID=your-account.near
+ACCOUNT_KEY=your-private-key
+
+# NEAR Network Configuration
+NEAR_NETWORK_ID=mainnet  # or testnet
+NEAR_NODE_URL=https://rpc.mainnet.near.org  # or https://rpc.testnet.near.org
+NEAR_GAS_LIMIT=300000000000000
+
+# Debug Mode
+DEBUG=false
+```
+
+### ▶️ Running the Agent
 
 ```bash
+# Start the AMM Near Agent
 pnpm dev
 ```
 
-## 📁 Folder Structure
-The main agent code lives in `index.ts` where the subagents live inside the `agents` folder. The agents can have tools which reside in the `tools` folder.
+The agent will start listening for events on the `amm.iqai.near` contract and process swap calculations automatically.
+
+## 🔍 Example Transactions
+
+We've deployed the NEAR contract on mainnet, which you can view at [https://nearblocks.io/address/amm-iqai.near](https://nearblocks.io/address/amm-iqai.near). Here are some example transactions:
+
+- [Creating new pool for USDT and wNEAR](https://nearblocks.io/txns/ADq5gcUy6DKLoFcFgCc9ged9S1eD6KiNhRfYXSHuR1kC)
+- [Swap USDT with wNEAR](https://nearblocks.io/txns/Doz8W9sJQ2wgvGeAHwYYmULLsjeiHrvFHXSRhi8K91Rq#execution#5g4KuV8HR6z8DZW8k3gXSJ9Np5JcevsZC84sv1kNGxBd)
+- [Agent response to the swap transaction](https://nearblocks.io/txns/CJ7Vb9Pvm7gGjruF9PdS3DB9K5gYFqorqUG3koWgX8ao)
+- [FT Transfer](https://nearblocks.io/txns/QXQUMTMKmYH9L55HzWygb9oYnzUyUcpA9jCduvVaxA9#execution#ACuByCKyJ3qhFJCcK7JBv74usyGYAcqb5Skf8pgxiqvp)
+
+## 📁 Project Structure
 
 ```
 ├── src/
 │   ├── agents/
-│   │   └── financial-agent/
-│   │       ├── index.ts
-│   │       └── tools/
-│   │           └── currency-converter-tool.ts
-│   ├── services/
-│   │   └── wallet.ts
-│   ├── env.ts
-│   └── index.ts
+│   │   ├── near-agent.ts      # Blockchain event listener agent
+│   │   └── amm-agent.ts       # AMM calculation agent
+│   ├── tools/
+│   │   └── amount-out-caluculator.ts  # AMM calculation tool
+│   ├── env.ts                 # Environment configuration
+│   └── index.ts              # Main application entry point
+├── .env                      # Environment variables
+└── README.md
 ```
 
-## ⚙️ Environment Setup
-Make sure to configure your environment variables:
+## 🧰 Key Features
 
-```bash
-cp .env.example .env
-```
+- **Event-Driven Architecture**: Listens to blockchain events in real-time
+- **MCP Integration**: Uses Model Context Protocol for blockchain interactions
+- **AMM Calculations**: Implements constant product formula for token swaps
+- **Error Handling**: Robust error handling and retry mechanisms
+- **Configurable**: Easy configuration through environment variables
 
-## 🧰 Dev Tools
-This starter includes:
-- 🐕 **Husky**: Git hooks for code quality
-- 🎨 **Biome**: Linting and formatting
-- 🚀 **GitHub Actions**: CI/CD pipeline
-- 📦 **PNPM**: Fast package manager
+## 🔧 Development
 
-## 🏗️ Building Your Agent
-1. **Create new agents** in the `src/agents/` directory
-2. **Add tools** to your agents in the `tools/` subdirectory
-3. **Configure services** in the `src/services/` directory
-4. **Update environment** variables in `src/env.ts`
+### Adding New Tools
 
-## 📚 Links
-- [ADK Library](https://github.com/IQAICOM/adk-ts)
+1. Create a new tool class extending `BaseTool` in the `src/tools/` directory
+2. Implement the required methods: `getDeclaration()` and `runAsync()`
+3. Add the tool to your agent in the respective agent file
+
+### Extending Functionality
+
+- **New Agents**: Create additional agents in `src/agents/`
+- **Custom Tools**: Add specialized tools for different calculations
+- **Event Handlers**: Extend event listening capabilities
+
+## 📚 Additional Resources
+
+- [ADK Library Documentation](https://github.com/IQAICOM/adk-ts)
+- [NEAR Protocol Documentation](https://docs.near.org/)
+- [AMM Near Contract Repository](https://github.com/zavodil/ai-amm)
+- [MCP Near Agent Package](https://www.npmjs.com/package/@iqai/mcp-near-agent)
 
 ## 🤝 Contributing
+
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
@@ -68,8 +135,5 @@ This starter includes:
 5. Open a Pull Request
 
 ## 📄 License
-MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
-If you encounter any issues or have questions:
-- 📝 [Create an issue](https://github.com/IQAICOM/adk-agent-starter/issues)
+MIT License - see the [LICENSE](LICENSE) file for details.
