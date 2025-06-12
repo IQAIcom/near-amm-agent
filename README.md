@@ -37,7 +37,7 @@ The project consists of two main agents:
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/IQAIcom/near-amm-agent
 
 # Navigate to the project directory
 cd amm-near-agent
