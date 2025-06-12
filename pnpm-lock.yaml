@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@iqai/adk':
-        specifier: ^0.0.4
-        version: 0.0.4(ws@8.18.2)
+        specifier: ^0.0.7
+        version: 0.0.7(ws@8.18.2)
       dotenv:
         specifier: ^16.4.5
         version: 16.5.0
@@ -100,12 +100,6 @@ packages:
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
-
-  '@clack/core@0.4.2':
-    resolution: {integrity: sha512-NYQfcEy8MWIxrT5Fj8nIVchfRFA26yYKJcvBS7WlUIlw2OmQOY9DhGGXMovyI5J5PpxrCPGkgUi207EBrjpBvg==}
-
-  '@clack/prompts@0.10.1':
-    resolution: {integrity: sha512-Q0T02vx8ZM9XSv9/Yde0jTmmBQufZhPJfYAg2XrrrxWWaZgq1rr8nU8Hv710BQ1dhoP8rtY7YUdpGej2Qza/cw==}
 
   '@electric-sql/pglite@0.3.2':
     resolution: {integrity: sha512-zfWWa+V2ViDCY/cmUfRqeWY1yLto+EpxjXnZzenB1TyxsTiXaTWeZFIZw6mac52BsuQm0RjCnisjBtdBaXOI6w==}
@@ -270,8 +264,8 @@ packages:
     peerDependencies:
       '@modelcontextprotocol/sdk': ^1.11.0
 
-  '@iqai/adk@0.0.4':
-    resolution: {integrity: sha512-O5jMMSo7unD/8ONSg1zd99I6M7y+c0qrL4mnCVtsKAr+rUyG5EO77ewM1EfJW+Lj4+k/VffMsamtCyEd+Rr17w==}
+  '@iqai/adk@0.0.7':
+    resolution: {integrity: sha512-z+KYwBqCYzAAppxrMGNa44WlRw8P4P4uMKv7kq3cq4KIi35scXE3A9jyStsjL8d+L+KHkihn826dqiEBOEiVww==}
     engines: {node: '>=22.0'}
 
   '@isaacs/cliui@8.0.2':
@@ -356,6 +350,9 @@ packages:
 
   '@scure/base@1.2.6':
     resolution: {integrity: sha512-g/nm5FgUa//MCj1gV09zTJTaM6KBAHqLN907YVQqf7zC49+DcO4B1so4ZX07Ef10Twr6nuqYEH9GEggFXA4Fmg==}
+
+  '@types/better-sqlite3@7.6.13':
+    resolution: {integrity: sha512-NMv9ASNARoKksWtsq/SHakpYAYnhBrQgGD8zkLYk/jaK8jUGn08CfEdTRgYhMypUQAfzSP8W6gNLe0q19/t4VA==}
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
@@ -1116,9 +1113,6 @@ packages:
     resolution: {integrity: sha512-TdrF7fW9Rphjq4RjrW0Kp2AW0Ahwu9sRGTkS6bvDi0SCwZlEZYmcfDbEsTz8RVk0EHIS/Vd1bv3JhG+1xZuAyQ==}
     engines: {node: '>=16'}
 
-  picocolors@1.1.1:
-    resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
-
   picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
@@ -1228,9 +1222,6 @@ packages:
   signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
-
-  sisteransi@1.0.5:
-    resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
 
   slice-ansi@5.0.0:
     resolution: {integrity: sha512-FC+lgizVPfie0kkhqUScwRu1O/lF6NOgJmlCgK+/LYxDCTk8sGelYaHDhFcDN+Sn3Cv+3VSa4Byeo+IMCzpMgQ==}
@@ -1434,17 +1425,6 @@ snapshots:
   '@biomejs/cli-win32-x64@1.9.4':
     optional: true
 
-  '@clack/core@0.4.2':
-    dependencies:
-      picocolors: 1.1.1
-      sisteransi: 1.0.5
-
-  '@clack/prompts@0.10.1':
-    dependencies:
-      '@clack/core': 0.4.2
-      picocolors: 1.1.1
-      sisteransi: 1.0.5
-
   '@electric-sql/pglite@0.3.2': {}
 
   '@esbuild/aix-ppc64@0.25.5':
@@ -1542,17 +1522,17 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@iqai/adk@0.0.4(ws@8.18.2)':
+  '@iqai/adk@0.0.7(ws@8.18.2)':
     dependencies:
       '@anthropic-ai/sdk': 0.39.0
-      '@clack/prompts': 0.10.1
       '@electric-sql/pglite': 0.3.2
       '@google-cloud/vertexai': 0.5.0
       '@google/genai': 1.3.0(@modelcontextprotocol/sdk@1.12.1)
       '@modelcontextprotocol/sdk': 1.12.1
+      '@types/better-sqlite3': 7.6.13
       axios: 1.9.0
       dotenv: 16.5.0
-      drizzle-orm: 0.43.1(@electric-sql/pglite@0.3.2)
+      drizzle-orm: 0.43.1(@electric-sql/pglite@0.3.2)(@types/better-sqlite3@7.6.13)
       openai: 4.104.0(ws@8.18.2)(zod@3.25.49)
       uuid: 11.1.0
       zod: 3.25.49
@@ -1567,7 +1547,6 @@ snapshots:
       - '@planetscale/database'
       - '@prisma/client'
       - '@tidbcloud/serverless'
-      - '@types/better-sqlite3'
       - '@types/pg'
       - '@types/sql.js'
       - '@vercel/postgres'
@@ -1706,6 +1685,10 @@ snapshots:
   '@noble/hashes@1.7.1': {}
 
   '@scure/base@1.2.6': {}
+
+  '@types/better-sqlite3@7.6.13':
+    dependencies:
+      '@types/node': 22.15.29
 
   '@types/json-schema@7.0.15': {}
 
@@ -1874,9 +1857,10 @@ snapshots:
 
   dotenv@16.5.0: {}
 
-  drizzle-orm@0.43.1(@electric-sql/pglite@0.3.2):
+  drizzle-orm@0.43.1(@electric-sql/pglite@0.3.2)(@types/better-sqlite3@7.6.13):
     optionalDependencies:
       '@electric-sql/pglite': 0.3.2
+      '@types/better-sqlite3': 7.6.13
 
   dunder-proto@1.0.1:
     dependencies:
@@ -2418,8 +2402,6 @@ snapshots:
 
   path-to-regexp@8.2.0: {}
 
-  picocolors@1.1.1: {}
-
   picomatch@2.3.1: {}
 
   pidtree@0.6.0: {}
@@ -2550,8 +2532,6 @@ snapshots:
       side-channel-weakmap: 1.0.2
 
   signal-exit@4.1.0: {}
-
-  sisteransi@1.0.5: {}
 
   slice-ansi@5.0.0:
     dependencies:
