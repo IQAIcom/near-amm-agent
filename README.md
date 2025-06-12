@@ -82,29 +82,6 @@ We've deployed the NEAR contract on mainnet, which you can view at [https://near
 - [Agent response to the swap transaction](https://nearblocks.io/txns/CJ7Vb9Pvm7gGjruF9PdS3DB9K5gYFqorqUG3koWgX8ao)
 - [FT Transfer](https://nearblocks.io/txns/QXQUMTMKmYH9L55HzWygb9oYnzUyUcpA9jCduvVaxA9#execution#ACuByCKyJ3qhFJCcK7JBv74usyGYAcqb5Skf8pgxiqvp)
 
-## 📁 Project Structure
-
-```
-├── src/
-│   ├── agents/
-│   │   ├── near-agent.ts      # Blockchain event listener agent
-│   │   └── amm-agent.ts       # AMM calculation agent
-│   ├── tools/
-│   │   └── amount-out-caluculator.ts  # AMM calculation tool
-│   ├── env.ts                 # Environment configuration
-│   └── index.ts              # Main application entry point
-├── .env                      # Environment variables
-└── README.md
-```
-
-## 🧰 Key Features
-
-- **Event-Driven Architecture**: Listens to blockchain events in real-time
-- **MCP Integration**: Uses Model Context Protocol for blockchain interactions
-- **AMM Calculations**: Implements constant product formula for token swaps
-- **Error Handling**: Robust error handling and retry mechanisms
-- **Configurable**: Easy configuration through environment variables
-
 ## 🔧 Development
 
 ### Adding New Tools
@@ -125,14 +102,6 @@ We've deployed the NEAR contract on mainnet, which you can view at [https://near
 - [NEAR Protocol Documentation](https://docs.near.org/)
 - [AMM Near Contract Repository](https://github.com/zavodil/ai-amm)
 - [MCP Near Agent Package](https://www.npmjs.com/package/@iqai/mcp-near-agent)
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ## 📄 License
 
