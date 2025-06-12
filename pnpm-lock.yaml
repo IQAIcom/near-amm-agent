@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@iqai/adk':
-        specifier: ^0.0.7
-        version: 0.0.7(ws@8.18.2)
+        specifier: ^0.0.10
+        version: 0.0.10(ws@8.18.2)
       dotenv:
         specifier: ^16.4.5
         version: 16.5.0
@@ -264,8 +264,8 @@ packages:
     peerDependencies:
       '@modelcontextprotocol/sdk': ^1.11.0
 
-  '@iqai/adk@0.0.7':
-    resolution: {integrity: sha512-z+KYwBqCYzAAppxrMGNa44WlRw8P4P4uMKv7kq3cq4KIi35scXE3A9jyStsjL8d+L+KHkihn826dqiEBOEiVww==}
+  '@iqai/adk@0.0.10':
+    resolution: {integrity: sha512-zuaFOCbLQIh9zb4T8VWpyJq94kfRAlPygr5n4uZIXqRJHOtr29NXg4+xomqEz9UV4Imfl5AxpwvjKst7LKoDlQ==}
     engines: {node: '>=22.0'}
 
   '@isaacs/cliui@8.0.2':
@@ -1522,7 +1522,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@iqai/adk@0.0.7(ws@8.18.2)':
+  '@iqai/adk@0.0.10(ws@8.18.2)':
     dependencies:
       '@anthropic-ai/sdk': 0.39.0
       '@electric-sql/pglite': 0.3.2
