@@ -1,7 +1,17 @@
+import { createSamplingHandler } from "@iqai/adk";
+import { getAmmAgent } from "./agents/amm-agent";
 import { getNearAgent } from "./agents/near-agent";
 
 async function main() {
-	const nearAgent = await getNearAgent();
+	const ammAgent = getAmmAgent();
+
+	const samplingHandler = createSamplingHandler((request) =>
+		ammAgent.run({
+			messages: request.messages,
+		}),
+	);
+
+	const nearAgent = await getNearAgent(samplingHandler);
 
 	console.log("Starting event listener...");
 
