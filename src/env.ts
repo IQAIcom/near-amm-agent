@@ -22,6 +22,7 @@ export const envSchema = z.object({
 	NEAR_NETWORK_ID: z.string().default("mainnet"),
 	NEAR_NODE_URL: z.string().default("https://1rpc.io/near"),
 	NEAR_GAS_LIMIT: z.string().default("300000000000000"),
+	PATH: z.string(),
 });
 
 export const env = envSchema.parse(process.env);
