@@ -16,14 +16,17 @@ async function main() {
 	console.log("Starting event listener...");
 
 	// Start listening
-	await nearAgent.run({
+	const output = await nearAgent.run({
 		messages: [
 			{
 				role: "user",
-				content: "Listen 'amm.iqai.near' contract for 'run_agent' events.",
+				content:
+					"With 'watch_near_event' tool, Watch for 'run_agent' events on 'amm.iqai.near' contract. for response call agent_response method and poll every 10s",
 			},
 		],
 	});
+
+	console.log("📠 Assistant: ", output.content);
 
 	// Keep the process alive indefinitely
 	while (true) {
