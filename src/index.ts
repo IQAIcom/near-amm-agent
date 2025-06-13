@@ -5,7 +5,7 @@ import { getNearAgent } from "./agents/near-agent";
 
 const CONTRACT_ADDRESS = "amm.iqai.near";
 const EVENT_TYPE = "run_agent";
-const POLLING_INTERVAL = "*/30 * * * * *"; // Every 30 seconds
+const POLLING_INTERVAL = "*/5 * * * *"; // Every 5 minutes
 
 async function main() {
 	try {
