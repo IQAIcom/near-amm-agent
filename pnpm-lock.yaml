@@ -17,6 +17,9 @@ importers:
       near-api-js:
         specifier: ^6.0.2
         version: 6.0.2(f2bdb6279e4135670ab0be6d371a0892)
+      node-cron:
+        specifier: ^4.1.0
+        version: 4.1.0
       zod:
         specifier: ^3.23.8
         version: 3.25.49
@@ -1104,6 +1107,10 @@ packages:
 
   node-addon-api@5.1.0:
     resolution: {integrity: sha512-eh0GgfEkpnoWDq+VY8OyvYhFEzBk6jIYbRKdIlyTiAXIVJ8PyBaKb0rp7oDtoddbdoHWhq8wwr+XZ81F1rpNdA==}
+
+  node-cron@4.1.0:
+    resolution: {integrity: sha512-OS+3ORu+h03/haS6Di8Qr7CrVs4YaKZZOynZwQpyPZDnR3tqRbwJmuP2gVR16JfhLgyNlloAV1VTrrWlRogCFA==}
+    engines: {node: '>=6.0.0'}
 
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
@@ -2531,6 +2538,8 @@ snapshots:
       semver: 7.7.2
 
   node-addon-api@5.1.0: {}
+
+  node-cron@4.1.0: {}
 
   node-domexception@1.0.0: {}
 
