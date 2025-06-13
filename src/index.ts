@@ -13,7 +13,7 @@ async function main() {
 
 	const nearAgent = await getNearAgent(samplingHandler);
 
-	console.log("Starting event listener...");
+	console.log("ℹ️ Starting event listener...");
 
 	// Start listening
 	const output = await nearAgent.run({
