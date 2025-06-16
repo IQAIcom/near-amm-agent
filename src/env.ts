@@ -20,7 +20,7 @@ export const envSchema = z.object({
 	ACCOUNT_ID: z.string(),
 	ACCOUNT_KEY: keyPairSchema,
 	NEAR_NETWORK_ID: z.string().default("mainnet"),
-	NEAR_NODE_URL: z.string().default("https://1rpc.io/near"),
+	NEAR_NODE_URL: z.string().default("https://near.lava.build"),
 	NEAR_GAS_LIMIT: z.string().default("300000000000000"),
 	PATH: z.string(),
 });
