@@ -32,6 +32,7 @@
 	"dependencies": {
 		"@iqai/adk": "^0.0.13",
 		"dotenv": "^16.4.5",
+		"is-ci": "^3.0.1",
 		"near-api-js": "^6.0.2",
 		"node-cron": "^4.1.0",
 		"zod": "^3.23.8"
@@ -40,7 +41,6 @@
 		"@biomejs/biome": "^1.9.4",
 		"@types/node": "^22.15.29",
 		"husky": "^9.0.0",
-		"is-ci": "^3.0.1",
 		"lint-staged": "^16.1.0",
 		"rimraf": "^6.0.1",
 		"tsx": "^4.19.2",
