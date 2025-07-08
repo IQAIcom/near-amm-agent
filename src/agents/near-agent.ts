@@ -24,6 +24,7 @@ export const getNearAgent = async (samplingHandler?: SamplingHandler) => {
 			"listens to transaction events on chain for agent execution",
 		)
 		.withModel("gemini-2.0-flash")
+		.withQuickSession("near_agent", "user")
 		.withTools(...nearAgentTools)
 		.build();
 

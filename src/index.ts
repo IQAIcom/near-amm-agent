@@ -1,4 +1,9 @@
-import { type BuiltAgent, type Event, createSamplingHandler } from "@iqai/adk";
+import {
+	type BuiltAgent,
+	type Event,
+	InvocationContext,
+	createSamplingHandler,
+} from "@iqai/adk";
 import * as cron from "node-cron";
 import { getAmmAgent } from "./agents/amm-agent";
 import { getNearAgent } from "./agents/near-agent";
@@ -33,13 +38,13 @@ async function setupEventListener(nearAgent: BuiltAgent) {
 
 	const output = await waitForRunAsyncCompletion(
 		nearAgent.runner.runAsync({
-			userId: "user-1",
+			userId: "user",
 			sessionId: nearAgent.session.id,
 			newMessage: {
 				role: "user",
 				parts: [
 					{
-						text: "Initialize event listener for AMM agent",
+						text: `With 'watch_near_event' tool, Watch for '${EVENT_TYPE}' events on '${CONTRACT_ADDRESS}' contract. for response call agent_response method and poll every 10s`,
 					},
 				],
 			},
@@ -67,7 +72,7 @@ async function checkEventStatus(nearAgent: BuiltAgent) {
 
 		const statusOutput = await waitForRunAsyncCompletion(
 			nearAgent.runner.runAsync({
-				userId: "user-1",
+				userId: "user",
 				sessionId: nearAgent.session.id,
 				newMessage: {
 					role: "user",
@@ -96,7 +101,7 @@ async function initializeAgents() {
 
 		const response = await waitForRunAsyncCompletion(
 			ammAgent.runner.runAsync({
-				userId: "user-1",
+				userId: "user",
 				sessionId: ammAgent.session.id,
 				newMessage: request.contents[0],
 			}),
