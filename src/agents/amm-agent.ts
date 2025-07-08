@@ -1,16 +1,16 @@
-import { Agent } from "@iqai/adk";
+import { AgentBuilder } from "@iqai/adk";
 import { AmountOutCalculatorTool } from "../tools/amount-out-caluculator";
 
-export const getAmmAgent = () => {
+export const getAmmAgent = async () => {
 	const AmountOutCalculator = new AmountOutCalculatorTool();
 
-	const agent = new Agent({
-		name: "amm_agent",
-		description:
+	const agent = await AgentBuilder.create("amm_agent")
+		.withDescription(
 			"This agent performs automated market making calculations to determine optimal output amounts",
-		model: "gemini-2.0-flash",
-		tools: [AmountOutCalculator],
-	});
+		)
+		.withModel("gemini-2.0-flash")
+		.withTools(AmountOutCalculator)
+		.build();
 
 	return agent;
 };
