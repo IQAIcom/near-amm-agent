@@ -9,7 +9,8 @@ import {
 	text,
 } from "@clack/prompts";
 import { config } from "dotenv";
-import { Account, Near, keyStores, utils } from "near-api-js";
+import { Account, KeyPairSigner, Near, keyStores, utils } from "near-api-js";
+import { JsonRpcProvider } from "near-api-js/lib/providers";
 import { env } from "./env";
 
 config();
@@ -33,23 +34,14 @@ interface SwapParams {
 }
 
 class NearSwapCLI {
-	private near: Near;
 	private account: Account;
 
 	constructor() {
-		const keyStore = new keyStores.InMemoryKeyStore();
-		const keyPair = utils.KeyPair.fromString(env.ACCOUNT_KEY);
-		keyStore.setKey(env.NEAR_NETWORK_ID, env.ACCOUNT_ID, keyPair);
-
-		const config = {
-			networkId: env.NEAR_NETWORK_ID,
-			keyStore,
-			nodeUrl: env.NEAR_NODE_URL,
-			headers: {},
-		};
-
-		this.near = new Near(config);
-		this.account = new Account(env.ACCOUNT_ID, this.near.connection.provider);
+		const signer = KeyPairSigner.fromSecretKey(env.ACCOUNT_KEY);
+		const provider = new JsonRpcProvider({
+			url: env.NEAR_NODE_URL,
+		});
+		this.account = new Account(env.ACCOUNT_ID, provider, signer);
 	}
 
 	async getTokenBalance(
