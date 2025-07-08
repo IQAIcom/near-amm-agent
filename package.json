@@ -13,7 +13,9 @@
 		"lint:fix": "biome check --write .",
 		"format": "biome format --write .",
 		"prepare": "is-ci || husky",
-		"precommit": "lint-staged"
+		"precommit": "lint-staged",
+		"cli": "tsx src/cli.ts",
+		"test-cli": "tsx src/test-cli.ts"
 	},
 	"lint-staged": {
 		"*.{ts,js,json}": ["biome check --write"]
@@ -30,7 +32,9 @@
 	},
 	"homepage": "https://github.com/IQAICOM/adk-agent-starter#readme",
 	"dependencies": {
-		"@iqai/adk": "^0.0.13",
+		"@clack/core": "^0.5.0",
+		"@clack/prompts": "^0.11.0",
+		"@iqai/adk": "^0.1.4",
 		"dotenv": "^16.4.5",
 		"is-ci": "^3.0.1",
 		"near-api-js": "^6.0.2",

@@ -1,4 +1,9 @@
-import { type Agent, createSamplingHandler } from "@iqai/adk";
+import {
+	type BuiltAgent,
+	type Event,
+	InvocationContext,
+	createSamplingHandler,
+} from "@iqai/adk";
 import * as cron from "node-cron";
 import { getAmmAgent } from "./agents/amm-agent";
 import { getNearAgent } from "./agents/near-agent";
@@ -9,80 +14,125 @@ const EVENT_TYPE = "run_agent";
 const POLLING_INTERVAL = "*/5 * * * *"; // Every 5 minutes
 
 async function main() {
-	try {
-		// Start the health check server (bypass gcp health check)
-		startServer();
+	// Start the health check server (bypass gcp health check)
+	startServer();
 
-		// Initialize agents
-		const { nearAgent } = await initializeAgents();
+	// Initialize agents
+	const { nearAgent } = await initializeAgents();
 
-		// Setup initial event listener
-		await setupEventListener(nearAgent);
+	// Setup initial event listener
+	await setupEventListener(nearAgent);
 
-		// Start periodic status checking
-		startCronJob(nearAgent);
+	// Start periodic status checking
+	startCronJob(nearAgent);
 
-		console.log("🚀 Near AMM Agent is now running!");
-	} catch (error) {
-		console.error("💥 Failed to start Near AMM Agent:", error);
-		process.exit(1);
-	}
+	console.log("🚀 Near AMM Agent is now running!");
 }
 
-async function setupEventListener(nearAgent: Agent) {
+async function setupEventListener(nearAgent: BuiltAgent) {
 	console.log("ℹ️ Setting up event listener...");
 
-	const output = await nearAgent.run({
-		messages: [
-			{
-				role: "user",
-				content: `With 'watch_near_event' tool, Watch for '${EVENT_TYPE}' events on '${CONTRACT_ADDRESS}' contract. for response call agent_response method and poll every 10s`,
-			},
-		],
-	});
+	if (!nearAgent.runner || !nearAgent.session) {
+		throw new Error("Runner or session not found");
+	}
 
-	console.log("📠 Initial Setup:", output.content);
+	const output = await waitForRunAsyncCompletion(
+		nearAgent.runner.runAsync({
+			userId: "user",
+			sessionId: nearAgent.session.id,
+			newMessage: {
+				role: "user",
+				parts: [
+					{
+						text: `With 'watch_near_event' tool, Watch for '${EVENT_TYPE}' events on '${CONTRACT_ADDRESS}' contract. for response call agent_response method and poll every 10s`,
+					},
+				],
+			},
+		}),
+	);
+
+	console.log("📠 Initial Setup:", output);
 }
 
-function startCronJob(nearAgent: Agent) {
+function startCronJob(nearAgent: BuiltAgent) {
 	console.log("ℹ️ Starting cron job for event monitoring...");
 
 	cron.schedule(POLLING_INTERVAL, () => checkEventStatus(nearAgent));
 
-	console.log("✅ Cron job scheduled to run every 10 seconds");
+	console.log("✅ Cron job scheduled to run every 5 minutes");
 }
 
-async function checkEventStatus(nearAgent: Agent) {
+async function checkEventStatus(nearAgent: BuiltAgent) {
 	try {
 		console.log(`🔍 Checking for ${EVENT_TYPE} events...`);
 
-		const statusOutput = await nearAgent.run({
-			messages: [
-				{
-					role: "user",
-					content: `Check status for '${EVENT_TYPE}' events on '${CONTRACT_ADDRESS}' contract and provide current status. Include statistics!`,
-				},
-			],
-		});
+		if (!nearAgent.runner || !nearAgent.session) {
+			throw new Error("Runner or session not found");
+		}
 
-		console.log("📠 Status Update:", statusOutput.content);
+		const statusOutput = await waitForRunAsyncCompletion(
+			nearAgent.runner.runAsync({
+				userId: "user",
+				sessionId: nearAgent.session.id,
+				newMessage: {
+					role: "user",
+					parts: [
+						{
+							text: `Check status for '${EVENT_TYPE}' events on '${CONTRACT_ADDRESS}' contract and provide current status. Include statistics!`,
+						},
+					],
+				},
+			}),
+		);
+
+		console.log("📠 Status Update:", statusOutput);
 	} catch (error) {
 		console.error("❌ Error checking events:", error);
 	}
 }
 
 async function initializeAgents() {
-	const ammAgent = getAmmAgent();
+	const ammAgent = await getAmmAgent();
 
-	const samplingHandler = createSamplingHandler((request) =>
-		ammAgent.run({
-			messages: request.messages,
-		}),
-	);
+	const samplingHandler = createSamplingHandler(async (request) => {
+		if (!ammAgent.runner || !ammAgent.session) {
+			throw new Error("Runner not found");
+		}
+
+		const response = await waitForRunAsyncCompletion(
+			ammAgent.runner.runAsync({
+				userId: "user",
+				sessionId: ammAgent.session.id,
+				newMessage: request.contents[0],
+			}),
+		);
+
+		return {
+			content: {
+				role: "model",
+				parts: [{ text: response }],
+			},
+		};
+	});
 
 	const nearAgent = await getNearAgent(samplingHandler);
 
-	return { nearAgent };
+	return { nearAgent, ammAgent };
+}
+
+// Helper function to wait for runAsync completion and return final response
+async function waitForRunAsyncCompletion(
+	asyncGenerator: AsyncGenerator<Event, void, unknown>,
+): Promise<string> {
+	let finalResponse = "";
+
+	for await (const event of asyncGenerator) {
+		if (!event.partial && event.content?.parts?.[0]?.text) {
+			finalResponse += event.content.parts[0].text;
+		}
+	}
+
+	return finalResponse;
 }
 
 main().catch(console.error);
