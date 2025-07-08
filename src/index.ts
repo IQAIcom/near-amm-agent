@@ -9,24 +9,19 @@ const EVENT_TYPE = "run_agent";
 const POLLING_INTERVAL = "*/5 * * * *"; // Every 5 minutes
 
 async function main() {
-	try {
-		// Start the health check server (bypass gcp health check)
-		startServer();
+	// Start the health check server (bypass gcp health check)
+	startServer();
 
-		// Initialize agents
-		const { nearAgent } = await initializeAgents();
+	// Initialize agents
+	const { nearAgent } = await initializeAgents();
 
-		// Setup initial event listener
-		await setupEventListener(nearAgent);
+	// Setup initial event listener
+	await setupEventListener(nearAgent);
 
-		// Start periodic status checking
-		startCronJob(nearAgent);
+	// Start periodic status checking
+	startCronJob(nearAgent);
 
-		console.log("🚀 Near AMM Agent is now running!");
-	} catch (error) {
-		console.error("💥 Failed to start Near AMM Agent:", error);
-		process.exit(1);
-	}
+	console.log("🚀 Near AMM Agent is now running!");
 }
 
 async function setupEventListener(nearAgent: BuiltAgent) {

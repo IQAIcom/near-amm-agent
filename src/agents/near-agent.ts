@@ -15,6 +15,7 @@ export const getNearAgent = async (samplingHandler?: SamplingHandler) => {
 			NEAR_NETWORK_ID: env.NEAR_NETWORK_ID,
 			NEAR_NODE_URL: env.NEAR_NODE_URL,
 			NEAR_GAS_LIMIT: env.NEAR_GAS_LIMIT,
+			DEBUG: env.DEBUG,
 		},
 	}).getTools();
 
