@@ -9,7 +9,7 @@ import {
 	text,
 } from "@clack/prompts";
 import { config } from "dotenv";
-import { Account, KeyPairSigner, Near, keyStores, utils } from "near-api-js";
+import { Account, KeyPairSigner } from "near-api-js";
 import { JsonRpcProvider } from "near-api-js/lib/providers";
 import { env } from "./env";
 
@@ -49,17 +49,17 @@ class NearSwapCLI {
 		tokenContract: string,
 	): Promise<TokenBalance> {
 		try {
-			const result = await this.account.viewFunction({
+			const result = await this.account.callFunction({
 				contractId: tokenContract,
 				methodName: "ft_balance_of",
 				args: { account_id: accountId },
 			});
 
-			const metadata = await this.account.viewFunction({
+			const metadata = (await this.account.callFunction({
 				contractId: tokenContract,
 				methodName: "ft_metadata",
 				args: {},
-			});
+			})) as { decimals: number; symbol: string };
 
 			const balance = result as string;
 			const decimals = metadata.decimals;
@@ -81,15 +81,14 @@ class NearSwapCLI {
 		}
 	}
 
-	async getNEARBalance(accountId: string): Promise<TokenBalance> {
+	async getNEARBalance(): Promise<TokenBalance> {
 		try {
-			const accountInfo = await this.account.getAccountBalance();
-			const balance = accountInfo.total;
-			const formatted = (Number.parseInt(balance) / 1e24).toFixed(6);
+			const balance = await this.account.getBalance();
+			const formatted = (Number.parseInt(balance.toString()) / 1e24).toFixed(6);
 
 			return {
 				token: "NEAR",
-				balance,
+				balance: balance.toString(),
 				formatted,
 			};
 		} catch (error) {
@@ -106,7 +105,7 @@ class NearSwapCLI {
 		s.start("Fetching account balances...");
 
 		try {
-			const nearBalance = await this.getNEARBalance(env.ACCOUNT_ID);
+			const nearBalance = await this.getNEARBalance();
 			const wrapNearBalance = await this.getTokenBalance(
 				env.ACCOUNT_ID,
 				WRAP_NEAR_CONTRACT,
@@ -154,7 +153,7 @@ class NearSwapCLI {
 			};
 
 			// Execute ft_transfer_call to the AMM contract
-			const result = await this.account.functionCall({
+			const result = await this.account.callFunction({
 				contractId: params.tokenIn,
 				methodName: "ft_transfer_call",
 				args: {
@@ -163,11 +162,11 @@ class NearSwapCLI {
 					msg: JSON.stringify(swapMsg),
 				},
 				gas: BigInt(env.NEAR_GAS_LIMIT),
-				attachedDeposit: BigInt("1"),
+				deposit: BigInt("1"),
 			});
 
 			s.stop("Swap transaction submitted successfully!");
-			log.success(`Transaction hash: ${result.transaction.hash}`);
+			log.success(`Transaction hash: ${result.toString()}`);
 			return result;
 		} catch (error) {
 			s.stop("Swap transaction failed");
