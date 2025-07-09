@@ -17,7 +17,7 @@ import { env } from "./env";
 config();
 
 // Contract addresses
-const AMM_CONTRACT = "amm.iqai.near";
+const AMM_CONTRACT = "amm-iqai.near";
 const WRAP_NEAR_CONTRACT = "wrap.near";
 const USDT_CONTRACT = "usdt.tether-token.near";
 

@@ -1,15 +1,10 @@
-import {
-	type BuiltAgent,
-	type Event,
-	InvocationContext,
-	createSamplingHandler,
-} from "@iqai/adk";
+import { type BuiltAgent, type Event, createSamplingHandler } from "@iqai/adk";
 import * as cron from "node-cron";
 import { getAmmAgent } from "./agents/amm-agent";
 import { getNearAgent } from "./agents/near-agent";
 import { startServer } from "./server";
 
-const CONTRACT_ADDRESS = "amm.iqai.near";
+const CONTRACT_ADDRESS = "amm-iqai.near";
 const EVENT_TYPE = "run_agent";
 const POLLING_INTERVAL = "*/5 * * * *"; // Every 5 minutes
 
