@@ -8,7 +8,7 @@ The AMM Near Agent is a specialized AI agent that facilitates trading between tw
 
 ### ⚙️ How It Works
 
-1. **Event Listening**: The Near Agent continuously monitors the `amm.iqai.near` contract for `run_agent` events
+1. **Event Listening**: The Near Agent continuously monitors the `amm-iqai.near` contract for `run_agent` events
 2. **Event Processing**: When a swap event is detected, the agent processes the transaction details
 3. **AMM Calculations**: The AMM Agent calculates optimal output amounts using the constant product formula
 4. **Response**: The agent responds with calculated swap amounts back to the contract
@@ -71,7 +71,7 @@ DEBUG=false
 pnpm dev
 ```
 
-The agent will start listening for events on the `amm.iqai.near` contract and process swap calculations automatically.
+The agent will start listening for events on the `amm-iqai.near` contract and process swap calculations automatically.
 
 ## 🔍 Example Transactions
 
