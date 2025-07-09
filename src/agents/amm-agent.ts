@@ -9,6 +9,7 @@ export const getAmmAgent = async () => {
 			"This agent performs automated market making calculations to determine optimal output amounts",
 		)
 		.withModel("gemini-2.0-flash")
+		.withQuickSession("amm_agent", "user")
 		.withTools(AmountOutCalculator)
 		.build();
 
