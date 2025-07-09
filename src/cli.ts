@@ -272,11 +272,8 @@ async function main() {
 	// Execute the swap
 	try {
 		await cli.executeSwap(swapParams);
-
-		note("Final balances after swap:", "Updated Balances");
-		await cli.displayBalances();
-
-		outro("🎉 Swap demo completed successfully!");
+		// Script completes after swap, no further output or balance display
+		process.exit(0);
 	} catch (error) {
 		log.error(`Swap failed: ${error}`);
 		outro("❌ Swap failed. Please check your balances and try again.");
