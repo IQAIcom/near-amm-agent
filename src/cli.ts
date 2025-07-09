@@ -162,7 +162,7 @@ class NearSwapCLI {
 			};
 
 			// Execute ft_transfer_call to the AMM contract
-			const result = await this.account.callFunction({
+			await this.account.callFunction({
 				contractId: params.tokenIn,
 				methodName: "ft_transfer_call",
 				args: {
@@ -175,8 +175,6 @@ class NearSwapCLI {
 			});
 
 			s.stop("Swap transaction submitted successfully!");
-			log.success(`Transaction hash: ${result.toString()}`);
-			return result;
 		} catch (error) {
 			s.stop("Swap transaction failed");
 			log.error(`Error executing swap: ${error}`);
