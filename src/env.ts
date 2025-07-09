@@ -17,8 +17,10 @@ const keyPairSchema = z.custom<KeyPairString>(
 export const envSchema = z.object({
 	DEBUG: z.coerce.boolean().default(false),
 	GOOGLE_API_KEY: z.string(),
-	ACCOUNT_ID: z.string(),
-	ACCOUNT_KEY: keyPairSchema,
+	AGENT_ACCOUNT_ID: z.string(),
+	AGENT_ACCOUNT_KEY: keyPairSchema,
+	USER_ACCOUNT_ID: z.string().optional(),
+	USER_ACCOUNT_KEY: keyPairSchema.optional(),
 	NEAR_NETWORK_ID: z.string().default("mainnet"),
 	NEAR_NODE_URL: z.string().default("https://rpc.web4.near.page/account/near"),
 	NEAR_GAS_LIMIT: z.string().default("300000000000000"),

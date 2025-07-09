@@ -11,6 +11,7 @@ import {
 import { config } from "dotenv";
 import { Account, KeyPairSigner } from "near-api-js";
 import { JsonRpcProvider } from "near-api-js/lib/providers";
+import type { KeyPairString } from "near-api-js/lib/utils";
 import { env } from "./env";
 
 config();
@@ -35,13 +36,21 @@ interface SwapParams {
 
 class NearSwapCLI {
 	private account: Account;
+	private userAccountId: string;
+	private userAccountKey: KeyPairString;
 
 	constructor() {
-		const signer = KeyPairSigner.fromSecretKey(env.ACCOUNT_KEY);
+		if (!env.USER_ACCOUNT_ID || !env.USER_ACCOUNT_KEY) {
+			throw Error("User account id or account key not set");
+		}
+		this.userAccountId = env.USER_ACCOUNT_ID;
+		this.userAccountKey = env.USER_ACCOUNT_KEY;
+
+		const signer = KeyPairSigner.fromSecretKey(this.userAccountKey);
 		const provider = new JsonRpcProvider({
 			url: env.NEAR_NODE_URL,
 		});
-		this.account = new Account(env.ACCOUNT_ID, provider, signer);
+		this.account = new Account(this.userAccountId, provider, signer);
 	}
 
 	async getTokenBalance(
@@ -107,18 +116,18 @@ class NearSwapCLI {
 		try {
 			const nearBalance = await this.getNEARBalance();
 			const wrapNearBalance = await this.getTokenBalance(
-				env.ACCOUNT_ID,
+				this.userAccountId,
 				WRAP_NEAR_CONTRACT,
 			);
 			const usdtBalance = await this.getTokenBalance(
-				env.ACCOUNT_ID,
+				this.userAccountId,
 				USDT_CONTRACT,
 			);
 
 			s.stop("Balances fetched successfully!");
 
 			note(
-				`💰 Account: ${env.ACCOUNT_ID}\n\n` +
+				`💰 Account: ${this.userAccountId}\n\n` +
 					`${nearBalance.token}: ${nearBalance.formatted}\n` +
 					`${wrapNearBalance.token}: ${wrapNearBalance.formatted}\n` +
 					`${usdtBalance.token}: ${usdtBalance.formatted}`,
