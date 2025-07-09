@@ -39,7 +39,7 @@ async function setupEventListener(nearAgent: BuiltAgent) {
 				role: "user",
 				parts: [
 					{
-						text: `With 'watch_near_event' tool, Watch for '${EVENT_TYPE}' events on '${CONTRACT_ADDRESS}' contract. for response call agent_response method and poll every 10s`,
+						text: `With 'watch_near_event' tool, Watch for '${EVENT_TYPE}' events on '${CONTRACT_ADDRESS}' contract. for response call agent_response method and amount_out as response parameter name and poll every 10s`,
 					},
 				],
 			},

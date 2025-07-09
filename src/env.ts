@@ -24,6 +24,7 @@ export const envSchema = z.object({
 	NEAR_NETWORK_ID: z.string().default("mainnet"),
 	NEAR_NODE_URL: z.string().default("https://rpc.web4.near.page/account/near"),
 	NEAR_GAS_LIMIT: z.string().default("300000000000000"),
+	LLM_MODEL: z.string().default("gemini-2.0-flash"),
 	PATH: z.string(),
 });
 

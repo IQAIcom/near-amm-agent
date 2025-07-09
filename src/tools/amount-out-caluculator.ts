@@ -1,4 +1,4 @@
-import { Agent, BaseTool } from "@iqai/adk";
+import { BaseTool } from "@iqai/adk";
 import { JsonRpcProvider } from "near-api-js/lib/providers";
 import { env } from "../env";
 
@@ -45,6 +45,11 @@ export class AmountOutCalculatorTool extends BaseTool {
 		tokenOut: string;
 		amountIn: number;
 	}) {
+		console.log("Running amount_out_calculator tool");
+		console.log("Token in:", args.tokenIn);
+		console.log("Token out:", args.tokenOut);
+		console.log("Amount in:", args.amountIn);
+
 		try {
 			const balances = (await provider.callFunction(
 				"amm-iqai.near",
