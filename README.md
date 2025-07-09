@@ -14,6 +14,9 @@ The AMM Near Agent is a specialized AI agent that facilitates trading between tw
 4. **Response**: The agent responds with calculated swap amounts back to the contract
 5. **Transaction Completion**: The contract finalizes the swap and transfers tokens to the user
 
+### 🎥 DEMO Video
+![](https://files.catbox.moe/lo6gm5.mp4)
+
 ## 🏗️ Architecture
 
 The project consists of two main agents:
