@@ -87,10 +87,15 @@ async function checkEventStatus(nearAgent: BuiltAgent) {
 }
 
 async function initializeAgents() {
-	const ammAgent = await getAmmAgent();
-
 	const samplingHandler = createSamplingHandler(async (request) => {
+		const ammAgent = await getAmmAgent();
+
 		if (!ammAgent.runner || !ammAgent.session) {
+			console.warn(
+				"🚧 Runner or session not found: ",
+				ammAgent.runner,
+				ammAgent.session,
+			);
 			throw new Error("Runner not found");
 		}
 
@@ -112,7 +117,7 @@ async function initializeAgents() {
 
 	const nearAgent = await getNearAgent(samplingHandler);
 
-	return { nearAgent, ammAgent };
+	return { nearAgent };
 }
 
 // Helper function to wait for runAsync completion and return final response

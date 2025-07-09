@@ -183,18 +183,6 @@ class NearSwapCLI {
 			throw error;
 		}
 	}
-
-	async waitForAgentResponse() {
-		const s = spinner();
-		s.start("Waiting for agent to process the swap...");
-
-		// In a real implementation, you would poll for the transaction status
-		// For demo purposes, we'll just wait a bit
-		await new Promise((resolve) => setTimeout(resolve, 3000));
-
-		s.stop("Agent processing complete!");
-		log.success("The AMM agent should have processed your swap request!");
-	}
 }
 
 async function main() {
@@ -273,16 +261,18 @@ async function main() {
 			swapType === "wrap_near_to_usdt" ? WRAP_NEAR_CONTRACT : USDT_CONTRACT,
 		tokenOut:
 			swapType === "wrap_near_to_usdt" ? USDT_CONTRACT : WRAP_NEAR_CONTRACT,
-		amountIn: (Number.parseFloat(String(amountIn)) * 1e24).toString(), // Convert to yoctoNEAR
-		minAmountOut: (Number.parseFloat(String(minAmountOut)) * 1e6).toString(), // Convert to USDT decimals
+		amountIn: BigInt(
+			Math.floor(Number.parseFloat(String(amountIn)) * 1e24),
+		).toString(), // Convert to yoctoNEAR as integer string
+		minAmountOut: BigInt(
+			Math.floor(Number.parseFloat(String(minAmountOut)) * 1e6),
+		).toString(), // Convert to USDT decimals as integer string
 	};
 
 	// Execute the swap
 	try {
 		await cli.executeSwap(swapParams);
-		await cli.waitForAgentResponse();
 
-		// Display final balances
 		note("Final balances after swap:", "Updated Balances");
 		await cli.displayBalances();
 
