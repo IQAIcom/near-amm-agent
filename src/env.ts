@@ -1,8 +1,11 @@
+import {
+	type LanguageModelV1,
+	createOpenRouter,
+} from "@openrouter/ai-sdk-provider";
 import { config } from "dotenv";
 import { z } from "zod";
 
 config();
-
 type KeyPairString = `ed25519:${string}` | `secp256k1:${string}`;
 
 const keyPairSchema = z.custom<KeyPairString>(
@@ -24,8 +27,23 @@ export const envSchema = z.object({
 	NEAR_NETWORK_ID: z.string().default("mainnet"),
 	NEAR_NODE_URL: z.string().default("https://rpc.web4.near.page/account/near"),
 	NEAR_GAS_LIMIT: z.string().default("300000000000000"),
-	LLM_MODEL: z.string().default("gemini-2.0-flash"),
+	LLM_MODEL: z.string().default("gemini-2.5-flash"),
 	PATH: z.string(),
+	OPEN_ROUTER_KEY: z
+		.string()
+		.optional()
+		.describe("When given, agents use open-router endpoint instead"),
 });
 
 export const env = envSchema.parse(process.env);
+export let model: string | LanguageModelV1;
+
+if (env.OPEN_ROUTER_KEY) {
+	console.log("🚀 AGENT WILL USE OPENROUTER 🚀");
+	const openrouter = createOpenRouter({
+		apiKey: env.OPEN_ROUTER_KEY,
+	});
+	model = openrouter(env.LLM_MODEL);
+} else {
+	model = env.LLM_MODEL;
+}

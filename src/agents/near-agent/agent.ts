@@ -1,10 +1,10 @@
+import { env, model } from "@/env";
 import {
 	Agent,
 	AgentBuilder,
 	McpNearAgent,
 	type SamplingHandler,
 } from "@iqai/adk";
-import { env } from "../env";
 
 export const getNearAgent = async (samplingHandler?: SamplingHandler) => {
 	const nearAgentTools = await McpNearAgent({
@@ -23,8 +23,7 @@ export const getNearAgent = async (samplingHandler?: SamplingHandler) => {
 		.withDescription(
 			"listens to transaction events on chain for agent execution",
 		)
-		.withModel(env.LLM_MODEL)
-		.withQuickSession("near_agent", "user")
+		.withModel(model)
 		.withTools(...nearAgentTools)
 		.build();
 

@@ -4,7 +4,7 @@
 	"description": "adk-agent-starter is a starter project for creating adk agents",
 	"main": "dist/index.js",
 	"scripts": {
-		"build": "tsc",
+		"build": "tsc && tsc-alias",
 		"dev": "tsx watch src/index.ts",
 		"start": "node dist/index.js",
 		"clean": "rimraf dist",
@@ -34,7 +34,8 @@
 	"dependencies": {
 		"@clack/core": "^0.5.0",
 		"@clack/prompts": "^0.11.0",
-		"@iqai/adk": "^0.1.4",
+		"@iqai/adk": "^0.1.20",
+		"@openrouter/ai-sdk-provider": "^0.7.3",
 		"dotenv": "^16.4.5",
 		"is-ci": "^3.0.1",
 		"near-api-js": "^6.0.2",
@@ -48,6 +49,7 @@
 		"lint-staged": "^16.1.0",
 		"rimraf": "^6.0.1",
 		"tsx": "^4.19.2",
+		"tsc-alias": "^1.8.16",
 		"typescript": "^5.7.2"
 	}
 }
