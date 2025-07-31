@@ -1,10 +1,5 @@
 import { env, model } from "@/env";
-import {
-	Agent,
-	AgentBuilder,
-	McpNearAgent,
-	type SamplingHandler,
-} from "@iqai/adk";
+import { AgentBuilder, McpNearAgent, type SamplingHandler } from "@iqai/adk";
 
 export const getNearAgent = async (samplingHandler?: SamplingHandler) => {
 	const nearAgentTools = await McpNearAgent({
