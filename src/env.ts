@@ -36,14 +36,14 @@ export const envSchema = z.object({
 });
 
 export const env = envSchema.parse(process.env);
-export let model: string | LanguageModelV1;
 
-if (env.OPEN_ROUTER_KEY) {
-	console.log("🚀 AGENT WILL USE OPENROUTER 🚀");
-	const openrouter = createOpenRouter({
-		apiKey: env.OPEN_ROUTER_KEY,
-	});
-	model = openrouter(env.LLM_MODEL);
-} else {
-	model = env.LLM_MODEL;
-}
+export const model: string | LanguageModelV1 = (() => {
+	if (env.OPEN_ROUTER_KEY) {
+		console.log("🚀 AGENT WILL USE OPENROUTER 🚀");
+		const openrouter = createOpenRouter({
+			apiKey: env.OPEN_ROUTER_KEY,
+		});
+		return openrouter(env.LLM_MODEL);
+	}
+	return env.LLM_MODEL;
+})();
