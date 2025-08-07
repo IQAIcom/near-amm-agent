@@ -19,7 +19,7 @@ const keyPairSchema = z.custom<KeyPairString>(
 );
 export const envSchema = z.object({
 	DEBUG: z.coerce.boolean().default(false),
-	GOOGLE_API_KEY: z.string(),
+	GOOGLE_API_KEY: z.string().optional(),
 	AGENT_ACCOUNT_ID: z.string(),
 	AGENT_ACCOUNT_KEY: keyPairSchema,
 	USER_ACCOUNT_ID: z.string().optional(),
