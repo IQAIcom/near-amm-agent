@@ -1,6 +1,6 @@
-import { BaseTool } from "@iqai/adk";
+import { env } from "@/env";
+import { BaseTool, type JSONSchema } from "@iqai/adk";
 import { JsonRpcProvider } from "near-api-js/lib/providers";
-import { env } from "../env";
 
 const provider = new JsonRpcProvider({
 	url: env.NEAR_NODE_URL,
@@ -20,23 +20,23 @@ export class AmountOutCalculatorTool extends BaseTool {
 			name: this.name,
 			description: this.description,
 			parameters: {
-				type: "object",
+				type: "OBJECT",
 				properties: {
 					tokenIn: {
-						type: "string",
+						type: "STRING",
 						description: "Input token address",
 					},
 					tokenOut: {
-						type: "string",
+						type: "STRING",
 						description: "Output token address",
 					},
 					amountIn: {
-						type: "number",
+						type: "NUMBER",
 						description: "Amount of input token to swap",
 					},
 				},
 				required: ["tokenIn", "tokenOut", "amountIn"],
-			},
+			} as JSONSchema,
 		};
 	}
 
